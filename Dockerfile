@@ -3,8 +3,8 @@ MAINTAINER GP Orcullo <kinsamanka@gmail.com>
 #
 # These variables configure the build.
 #
-ENV SUITE [suite]
-ENV ARCH  [arch]
+ENV SUITE wheezy
+ENV ARCH  i386
 #
 # [Leave surrounding comments to eliminate merge conflicts]
 #
