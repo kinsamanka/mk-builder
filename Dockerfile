@@ -3,8 +3,8 @@ MAINTAINER GP Orcullo <kinsamanka@gmail.com>
 #
 # These variables configure the build.
 #
-ENV SUITE [suite]
-ENV ARCH  [arch]
+ENV SUITE wheezy
+ENV ARCH  armhf
 #
 # [Leave surrounding comments to eliminate merge conflicts]
 #
