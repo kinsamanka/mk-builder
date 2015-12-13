@@ -66,7 +66,16 @@ RUN test $SUITE = wheezy && proot-helper apt-get install -y gcc-4.7
 RUN proot-helper apt-get clean
 
 # copy arm-linux-gnueabihf-* last to clobber package installs
-ADD bin/* ${ROOTFS}/usr/bin/
+ADD bin/* ${ROOTFS}/usr/local/bin/
+
+# use modified arm-linux-gnueabihf-* if running on wheezy
+RUN test $ARCH = armhf && test $SUITE = wheezy \
+        && cp ${ROOTFS}/usr/local/bin/* ${ROOTFS}/usr/bin/
+
+# else use native arm-linux-gnueabihf-* 
+RUN test $ARCH = armhf && test $SUITE = jessie \
+        && proot-helper \
+            ln -sf /host-rootfs/usr/bin/arm-linux-gnueabihf-g{cc,++} /usr/bin/
 
 # fix resolv.conf
 RUN echo "nameserver 8.8.8.8\nnameserver 8.8.4.4" \
