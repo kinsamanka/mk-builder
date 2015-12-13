@@ -59,6 +59,9 @@ RUN test $SUITE = wheezy \
         && proot-helper apt-get install -y tcl8.5-dev tk8.5-dev \
         || proot-helper apt-get install -y tcl8.6-dev tk8.6-dev
 
+# use gcc-4.7 for wheezy
+RUN test $SUITE = wheezy && proot-helper apt-get install -y gcc-4.7
+
 # cleanup apt
 RUN proot-helper apt-get clean
 
