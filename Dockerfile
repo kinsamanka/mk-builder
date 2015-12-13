@@ -62,6 +62,9 @@ RUN test $SUITE = wheezy \
 # use gcc-4.7 for wheezy
 RUN test $SUITE = wheezy && proot-helper apt-get install -y gcc-4.7
 
+# add ccache
+RUN proot-helper apt-get install -y ccache
+
 # cleanup apt
 RUN proot-helper apt-get clean
 
