@@ -11,6 +11,9 @@ ENV LC_ALL C
 ENV LANGUAGE C
 ENV LANG C
 
+# disable security updates due to frequent Hash Sum Mismatch
+RUN sed -i '/security/d' /etc/apt/sources.list
+
 # turn off recommends on container OS and proot OS
 RUN echo 'APT::Install-Recommends "0";\nAPT::Install-Suggests "0";' > \
             /etc/apt/apt.conf.d/01norecommend && \
@@ -24,7 +27,7 @@ RUN apt-key add /tmp/emdebian-toolchain-archive.key && \
     echo "deb http://emdebian.org/tools/debian/ jessie main" >> \
         /etc/apt/sources.list.d/emdebian.list && \
     dpkg --add-architecture armhf
-
+    
 # install required dependencies
 RUN apt-get update && \
     apt-get -y install \
