@@ -53,3 +53,4 @@ python-zmq
 uuid-dev
 uuid-runtime
 libxenomai-dev
+ccache
