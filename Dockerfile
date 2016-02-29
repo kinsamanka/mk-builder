@@ -11,6 +11,13 @@ ENV ARCH  armhf
 
 ENV PROOT_OPTS "-b /dev/urandom"
 
+# add raspbian keyring
+ADD https://archive.raspbian.org/raspbian.public.key /raspbian-archive
+RUN mkdir -p ${ROOTFS}/etc/apt/trusted.gpg.d && \
+    mv /raspbian-archive ${ROOTFS}/etc/apt/trusted.gpg.d/ && \
+    gpg --dearmor ${ROOTFS}/etc/apt/trusted.gpg.d/raspbian-archive && \
+    rm ${ROOTFS}/etc/apt/trusted.gpg.d/raspbian-archive
+
 # create chroot
 ADD wheezy.conf jessie.conf raspbian.conf /
 RUN multistrap -f /${SUITE}.conf -a ${ARCH} -d ${ROOTFS} && \
