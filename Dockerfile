@@ -3,7 +3,7 @@ MAINTAINER GP Orcullo <kinsamanka@gmail.com>
 #
 # These variables configure the build.
 #
-ENV SUITE jessie
+ENV SUITE raspbian
 ENV ARCH  armhf
 #
 # [Leave surrounding comments to eliminate merge conflicts]
