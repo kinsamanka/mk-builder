@@ -1,0 +1,31 @@
+sudo: required
+notifications:
+  email: 
+    on_success: never
+    on_failure: always
+  webhooks:
+    on_success: change
+    on_failure: always
+    on_start: never
+
+language: bash
+
+services:
+  - docker
+
+env:
+  global:
+    - DOCKER_REPO=machinekit/mk-builder
+    - DOCKER_TAG=$TRAVIS_BRANCH
+    - COMMIT=${TRAVIS_COMMIT::8}
+
+script:
+  - test $DOCKER_TAG = base
+      && docker build -t $DOCKER_REPO:${DOCKER_TAG}_${COMMIT} mkdocker-base
+      || docker build -t $DOCKER_REPO:${DOCKER_TAG}_${COMMIT} .
+
+after_success:
+  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+  - docker tag $DOCKER_REPO:${DOCKER_TAG}_${COMMIT} $DOCKER_REPO:${DOCKER_TAG}
+  - docker tag $DOCKER_REPO:${DOCKER_TAG} $DOCKER_REPO:travis-$TRAVIS_JOB_NUMBER
+  - docker push $DOCKER_REPO
